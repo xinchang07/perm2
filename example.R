@@ -13,14 +13,14 @@ l2 <- length(grp.2)
 lt <- l1+l2
 #this comment
 
-test.diff <- mean(grp.1) - mean(grp.2)
+test.diff <- median(grp.1) - median(grp.2)
 
 
 it <- function(n){
   M = NULL
   for(i in 1:n){
     s = sample(data, lt, FALSE)
-    m1 = mean(s[1:l1]) - mean(s[(l1+1):lt])
+    m1 = median(s[1:l1]) - median(s[(l1+1):lt])
     M = c(M,m1)
   }
   return(M)
@@ -31,8 +31,8 @@ examples <- it(10000)
 par(mfrow=c(1,1))
 hist(examples, col = "red", breaks = 100, main="Random Permutations", xlab="")
 abline(v = test.diff, col = "black", lwd = 4)
-
-
+abline(v = quantile(examples,0.025),col="blue")
+abline(v= quantile(examples,0.975),col = "blue")
 
 # 1 tail
 (sum(examples<test.diff))/(10000)
